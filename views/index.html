@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home</title>
+</head>
+<body>
+  <h2>Home Page</h2>
+  <button onclick="window.location.href='/register'">Register</button>
+  <button onclick="window.location.href='/login'">Login</button>
+  <button id="logoutButton" style="display:none;" onclick="logout()">Logout</button>
+
+  <script>
+    function logout() {
+      fetch('/logout', {
+        method: 'GET',
+        credentials: 'same-origin'
+      })
+      .then(response => {
+        if (response.status === 200) {
+          window.location.href = '/';
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+
+    // Sprawdzanie, czy użytkownik jest zalogowany
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+      if (token) {
+        document.getElementById('logoutButton').style.display = 'block';
+      }
+    });
+
+    window.addEventListener('beforeunload', () => {
+      document.cookie = 'token=; Max-Age=0; Path=/';
+    });
+  </script>
+</body>
+</html>

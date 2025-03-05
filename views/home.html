@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home</title>
+</head>
+<body>
+  <h2>Welcome to the Home Page</h2>
+  <button onclick="window.location.href='/register'">Register</button>
+  <button onclick="window.location.href='/login'">Login</button>
+
+  <script>
+    // Sprawdzanie, czy użytkownik jest zalogowany
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+      if (token) {
+        window.location.href = '/dashboard';
+      }
+    });
+  </script>
+</body>
+</html>
